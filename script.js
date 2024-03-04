@@ -41,11 +41,24 @@ function clearDisplay() {
 function calculateEquals() {
   if (operator !== '' && currentInput !== '') {
     let result = performCalculation();
-    currentInput = result.toString();
+    currentInput = formatResult(result);
     previousInput = '';
     operator = '';
     updateDisplay();
   }
+}
+
+function formatResult(result) {
+  let formattedResult = result.toString();
+  if (formattedResult.includes('.')) {
+    // If result has a decimal point
+    let decimalPart = formattedResult.split('.')[1];
+    if (decimalPart.length > 4) {
+      // If decimal part has more than 4 digits, round to 4 decimal places
+      return parseFloat(result.toFixed(4)).toString();
+    }
+  }
+  return formattedResult;
 }
 
 function performCalculation() {
