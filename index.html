@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="./style.css" />
+    <script src="./script.js" defer></script>
+    <title>Calculator</title>
+  </head>
+  <body>
+    <main>
+      <div class="calc_container">
+        <section class="calc_dispay_box">
+          <input type="text" id="display" disabled />
+        </section>
+        <section class="btns_container">
+          <section class="btns_left">
+            <div class="btns_top">
+              <button onclick="deleteLastDigit()">DE</button>
+              <button onclick="clearDisplay()">C</button>
+            </div>
+            <div class="btns_number">
+              <button onclick="getNumber(7)">7</button>
+              <button onclick="getNumber(8)">8</button>
+              <button onclick="getNumber(9)">9</button>
+
+              <button onclick="getNumber(4)">4</button>
+              <button onclick="getNumber(5)">5</button>
+              <button onclick="getNumber(6)">6</button>
+
+              <button onclick="getNumber(1)">1</button>
+              <button onclick="getNumber(2)">2</button>
+              <button onclick="getNumber(3)">3</button>
+            </div>
+            <div class="btns_bottom">
+              <button onclick="getNumber(0)">0</button>
+              <button onclick="addDecimal()">.</button>
+            </div>
+          </section>
+          <section class="btns_right">
+            <div class="btns_function">
+              <button onclick="getOperator('/')">/</button>
+              <button onclick="getOperator('*')">*</button>
+              <button onclick="getOperator('-')">-</button>
+              <button onclick="getOperator('+')">+</button>
+
+              <button onclick="calculateEquals()">=</button>
+            </div>
+          </section>
+        </section>
+      </div>
+    </main>
+  </body>
+</html>
