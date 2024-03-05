@@ -1,11 +1,15 @@
-// script.js
-
 let display = document.getElementById('display');
 let currentInput = '';
 let operator = '';
 let previousInput = '';
+let lastPress = ''; // Add this variable
 
 function getNumber(num) {
+  if (lastPress === 'calculation') {
+    clearDisplay();
+    lastPress = '';
+  }
+
   currentInput += num;
   updateDisplay();
 }
@@ -16,6 +20,7 @@ function getOperator(op) {
     previousInput = currentInput;
     currentInput = '';
     updateDisplay();
+    lastPress = '';
   }
 }
 
@@ -45,20 +50,9 @@ function calculateEquals() {
     previousInput = '';
     operator = '';
     updateDisplay();
-  }
-}
 
-function formatResult(result) {
-  let formattedResult = result.toString();
-  if (formattedResult.includes('.')) {
-    // If result has a decimal point
-    let decimalPart = formattedResult.split('.')[1];
-    if (decimalPart.length > 4) {
-      // If decimal part has more than 4 digits, round to 4 decimal places
-      return parseFloat(result.toFixed(4)).toString();
-    }
+    lastPress = 'calculation';
   }
-  return formattedResult;
 }
 
 function performCalculation() {
@@ -73,12 +67,35 @@ function performCalculation() {
     case '*':
       return num1 * num2;
     case '/':
-      return num1 / num2;
+      if (num2 === 0) {
+        // Division by zero error
+        return 'Cannot divide by 0!';
+      } else {
+        return num1 / num2;
+      }
     default:
       return num2;
   }
 }
 
+function formatResult(result) {
+  let formattedResult = result.toString();
+  if (formattedResult.includes('.')) {
+    let decimalPart = formattedResult.split('.')[1];
+    if (decimalPart.length > 4) {
+      return parseFloat(result.toFixed(4)).toString();
+    }
+  }
+  return formattedResult;
+}
+
 function updateDisplay() {
-  display.value = previousInput + ' ' + operator + ' ' + currentInput || '0';
+  let result = previousInput + ' ' + operator + ' ' + currentInput;
+
+  // Check for division by zero error
+  if (result.includes('Cannot divide by 0!')) {
+    display.value = 'Cannot divide by 0!';
+  } else {
+    display.value = result || '0';
+  }
 }
