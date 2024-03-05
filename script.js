@@ -83,10 +83,16 @@ function formatResult(result) {
   if (formattedResult.includes('.')) {
     let decimalPart = formattedResult.split('.')[1];
     if (decimalPart.length > 4) {
-      return parseFloat(result.toFixed(4)).toString();
+      return parseFloat(result.toFixed(4)).toLocaleString();
     }
   }
-  return formattedResult;
+  return formattedResult.toLocaleString();
+}
+
+function addCommas(value) {
+  const parts = value.toString().split('.');
+  parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+  return parts.join('.');
 }
 
 function updateDisplay() {
@@ -95,7 +101,14 @@ function updateDisplay() {
   if (result.includes('Cannot divide by 0!')) {
     display.value = 'Cannot divide by 0!';
   } else {
-    display.value = result || '0';
+    let formattedResult = result
+      ? addCommas(previousInput) +
+        ' ' +
+        operator +
+        ' ' +
+        addCommas(currentInput)
+      : '0';
+    display.value = formattedResult;
   }
 }
 
