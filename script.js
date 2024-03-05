@@ -2,7 +2,7 @@ let display = document.getElementById('display');
 let currentInput = '';
 let operator = '';
 let previousInput = '';
-let lastPress = ''; // Add this variable
+let lastPress = '';
 
 function getNumber(num) {
   if (lastPress === 'calculation') {
@@ -45,7 +45,7 @@ function clearDisplay() {
 
 function calculateEquals() {
   if (operator !== '' && currentInput !== '') {
-    let result = performCalculation();
+    let result = MathCalculation();
     currentInput = formatResult(result);
     previousInput = '';
     operator = '';
@@ -55,7 +55,7 @@ function calculateEquals() {
   }
 }
 
-function performCalculation() {
+function MathCalculation() {
   let num1 = parseFloat(previousInput);
   let num2 = parseFloat(currentInput);
 
@@ -68,7 +68,6 @@ function performCalculation() {
       return num1 * num2;
     case '/':
       if (num2 === 0) {
-        // Division by zero error
         return 'Cannot divide by 0!';
       } else {
         return num1 / num2;
@@ -92,7 +91,6 @@ function formatResult(result) {
 function updateDisplay() {
   let result = previousInput + ' ' + operator + ' ' + currentInput;
 
-  // Check for division by zero error
   if (result.includes('Cannot divide by 0!')) {
     display.value = 'Cannot divide by 0!';
   } else {
