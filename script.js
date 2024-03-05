@@ -1,4 +1,5 @@
 let display = document.getElementById('display');
+
 let currentInput = '';
 let operator = '';
 let previousInput = '';
@@ -95,5 +96,39 @@ function updateDisplay() {
     display.value = 'Cannot divide by 0!';
   } else {
     display.value = result || '0';
+  }
+}
+
+document.addEventListener('keydown', handleKeyPress);
+
+function handleKeyPress(event) {
+  const key = event.key;
+
+  if (!isNaN(key) && key !== ' ') {
+    getNumber(key);
+  } else {
+    switch (key) {
+      case '+':
+      case '-':
+      case '*':
+      case '/':
+        getOperator(key);
+        break;
+      case '.':
+        addDecimal();
+        break;
+      case 'Enter':
+        calculateEquals();
+        break;
+      case '=':
+        calculateEquals();
+        break;
+      case 'Delete':
+        deleteLastDigit();
+        break;
+      case 'Escape':
+        clearDisplay();
+        break;
+    }
   }
 }
